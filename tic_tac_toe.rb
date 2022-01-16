@@ -18,6 +18,7 @@ module WinCondition
       true
     else
       false      
+    end
   end
 end
 
@@ -38,8 +39,7 @@ class GridBoard
 end
 
 class Player
-  attr_reader :name, :mark
-  attr_accessor :choice
+  attr_reader :name, :mark, :choice
 
   def initialize(name, mark)
     @name = name
@@ -51,9 +51,11 @@ class Player
   end
 end
 
-grid = GridBoard.new
-p grid
-player1 = Player.new("Player1", "X")
-player1.choice = "a1"
-grid.mark_choice(player1, player1.choice)
-p grid
+class Game
+  attr_reader :player_1, :player_2
+  def initialize
+    @player_1 = Player.new("Player 1", "X")
+    @player_2 = Player.new("Player 2", "O")
+    @grid = Grid.new
+  end
+end
