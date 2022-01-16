@@ -20,6 +20,10 @@ module WinCondition
       false      
     end
   end
+
+  def draw?(grid)
+    grid.any? {|coordinate, value| value == nil}
+  end
 end
 
 class GridBoard
@@ -52,10 +56,11 @@ class Player
 end
 
 class Game
-  attr_reader :player_1, :player_2
+  attr_reader :player1, :player2
+
   def initialize
-    @player_1 = Player.new("Player 1", "X")
-    @player_2 = Player.new("Player 2", "O")
+    @player1 = Player.new('Player 1', 'X')
+    @player2 = Player.new('Player 2', 'O')
     @grid = Grid.new
   end
 end
