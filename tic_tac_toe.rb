@@ -1,4 +1,4 @@
-module WinCondition
+module EndCondition
   def win?(player, grid)
     if grid[:a1] == player.mark && grid[:a2] == player.mark && grid[:a3] == player.mark
       true
@@ -17,12 +17,12 @@ module WinCondition
     elsif grid[:a3] == player.mark && grid[:b2] == player.mark && grid[:c1] == player.mark
       true
     else
-      false      
+      false
     end
   end
 
   def draw?(grid)
-    grid.any? {|coordinate, value| value == nil}
+    grid.any? { |_coordinate, value| value.nil? }
   end
 end
 
@@ -38,24 +38,6 @@ module Messagable
   def prompt_choice_msg(player)
     "#{player.name}'s turn. Please input a grid coordinate:"
   end
-
-  def show_grid(grid)
-    "|_|"
-  end
-end
-
-class GridDisplay
-  attr_reader :grid_display
-
-  def initialize(grid)
-    @grid_display =
-      "
-      |#{grid[:a1]}|#{grid[:a2]}|#{grid[:a3]}|
-      |#{grid[:b1]}|#{grid[:b2]}|#{grid[:b3]}|
-      |#{grid[:c1]}|#{grid[:c2]}|#{grid[:c3]}|
-      "
-  end
-  
 end
 
 class GridBoard
@@ -101,11 +83,20 @@ class Player
 end
 
 class Game
+  include EndCondition
   attr_reader :player1, :player2
 
   def initialize
     @player1 = Player.new('Player 1', 'X')
     @player2 = Player.new('Player 2', 'O')
     @grid = Grid.new
+  end
+
+  def run_round
+
+  end
+
+  def run_game
+    run_round until EndCondition.win? || EndCondition.draw?
   end
 end
