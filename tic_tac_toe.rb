@@ -32,13 +32,15 @@ module Messagable
   end
 
   def announce_players_msg(first_player, second_player)
-    "#{first_player.name} is assigned #{first_player.mark}."
-    "#{second_player.name} is assigned #{second_player.mark}."
+    [
+      "#{first_player.name} is assigned #{first_player.mark}.",
+      "#{second_player.name} is assigned #{second_player.mark}."
+    ]
   end
 
   def instruction_msg
     'Each player will take turns choosing grid coordinates to place their marks.'
-    "Grid coordinates must be formatted similar to these examples: 'a1' 'b2'."
+    "Grid coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
   end
 
   def first_round_msg(first_player)
@@ -95,12 +97,12 @@ end
 class Game
   include EndCondition
   include Messagable
-  attr_reader :player1, :player2
+  attr_reader :player1, :player2, :current_player
 
   def initialize
     @player1 = Player.new('Player 1', 'X')
     @player2 = Player.new('Player 2', 'O')
-    @grid = Grid.new
+    @grid = GridBoard.new
   end
 
   def set_current_player
@@ -108,6 +110,7 @@ class Game
       @current_player = self.player2
     else
       @curent_player = self.player1
+    end
   end
 
   def run_round
@@ -120,7 +123,7 @@ class Game
   def run_game
     puts welcome_msg
     puts instruction_msg
-    puts announce_players_msg
-    run_round until EndCondition.win? || EndCondition.draw?
+    puts announce_players_msg(self.player1, self.player2)
+    run_round until EndCondition.win?(self.current_player, self.grid) || EndCondition.draw?(self.grid)
   end
 end
