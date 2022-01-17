@@ -26,6 +26,38 @@ module WinCondition
   end
 end
 
+module Messagable
+  def welcome_msg
+    'Welcome to a game of Tic-tac-toe!'
+  end
+
+  def first_round_msg(first_player)
+    "#{first_player.name} starts. Please input a grid coordinate:"
+  end
+
+  def prompt_choice_msg(player)
+    "#{player.name}'s turn. Please input a grid coordinate:"
+  end
+
+  def show_grid(grid)
+    "|_|"
+  end
+end
+
+class GridDisplay
+  attr_reader :grid_display
+
+  def initialize(grid)
+    @grid_display =
+      "
+      |#{grid[:a1]}|#{grid[:a2]}|#{grid[:a3]}|
+      |#{grid[:b1]}|#{grid[:b2]}|#{grid[:b3]}|
+      |#{grid[:c1]}|#{grid[:c2]}|#{grid[:c3]}|
+      "
+  end
+  
+end
+
 class GridBoard
   attr_accessor :grid
 
@@ -39,6 +71,16 @@ class GridBoard
 
   def mark_choice(player, choice)
     self.grid[choice.to_sym] = player.mark
+  end
+
+  def to_s
+    self.grid.transform_values do |tile|
+      if tile.nil?
+        '_'
+      else
+        v
+      end
+    end
   end
 end
 
