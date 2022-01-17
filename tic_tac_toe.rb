@@ -73,14 +73,17 @@ class GridBoard
     self.grid[choice.to_sym] = player.mark
   end
 
-  def to_s
-    self.grid.transform_values do |tile|
+  def display_grid
+    converted_grid = self.grid.transform_values do |tile|
       if tile.nil?
         '_'
       else
         v
       end
     end
+    puts "|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
+    puts "|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"
+    puts "|#{converted_grid[:c1]}|#{converted_grid[:c2]}|#{converted_grid[:c3]}|"
   end
 end
 
