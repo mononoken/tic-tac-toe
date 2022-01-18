@@ -22,7 +22,7 @@ module EndCondition
   end
 
   def draw?(grid)
-    grid.any? { |_coordinate, value| value.nil? }
+    grid.none? { |_coordinate, value| value.nil? }
   end
 end
 
@@ -117,7 +117,7 @@ class Game
   def run_round
     set_current_player
     self.grid.display_grid
-    puts prompt_choice_msg
+    puts prompt_choice_msg(self.current_player)
     self.current_player.set_choice
   end
 
@@ -125,7 +125,8 @@ class Game
     puts welcome_msg
     puts instruction_msg
     puts announce_players_msg(self.player1, self.player2)
-    run_round until EndCondition.win?(self.current_player, self.grid) || EndCondition.draw?(self.grid)
+    @current_player = self.player2
+    run_round until self.win?(self.current_player, self.grid.grid) || self.draw?(self.grid.grid)
   end
 end
 
