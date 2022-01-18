@@ -78,15 +78,17 @@ class GridBoard
 end
 
 class Player
-  attr_reader :name, :mark, :choice
+  attr_reader :name, :mark
+  attr_accessor :choice
 
   def initialize(name, mark)
     @name = name
     @mark = mark
+    @choice = nil
   end
 
   def set_choice
-    @choice = gets.chomp
+    self.choice = gets.chomp
   end
 end
 
@@ -115,6 +117,7 @@ class Game
     self.grid.display_grid
     puts prompt_choice_msg(self.current_player)
     self.current_player.set_choice
+    self.grid.mark_choice(self.current_player, self.current_player.choice)
   end
 
   def run_game
