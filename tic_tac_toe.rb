@@ -43,10 +43,6 @@ module Messagable
     "Grid coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
   end
 
-  def first_round_msg(first_player)
-    "#{first_player.name} starts. Please input a grid coordinate:"
-  end
-
   def prompt_choice_msg(player)
     "#{player.name}'s turn. Please input a grid coordinate:"
   end
