@@ -98,6 +98,7 @@ class Game
   include EndCondition
   include Messagable
   attr_reader :player1, :player2, :current_player
+  attr_accessor :grid
 
   def initialize
     @player1 = Player.new('Player 1', 'X')
@@ -127,3 +128,6 @@ class Game
     run_round until EndCondition.win?(self.current_player, self.grid) || EndCondition.draw?(self.grid)
   end
 end
+
+test_game = Game.new
+test_game.run_game
