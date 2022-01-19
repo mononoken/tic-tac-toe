@@ -68,7 +68,7 @@ class GridBoard
       if tile.nil?
         '_'
       else
-        v
+        tile
       end
     end
     puts "|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
