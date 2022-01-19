@@ -46,6 +46,14 @@ module Messagable
   def prompt_choice_msg(player)
     "#{player.name}'s turn. Please input a grid coordinate:"
   end
+
+  def announce_winner(winner)
+    "#{winner} wins!"
+  end
+
+  def draw_msg
+    'Game ended in a draw.'
+  end
 end
 
 class GridBoard
@@ -95,20 +103,21 @@ end
 class Game
   include EndCondition
   include Messagable
-  attr_reader :player1, :player2, :current_player
-  attr_accessor :grid
+  attr_reader :player1, :player2
+  attr_accessor :grid, :current_player
 
   def initialize
     @player1 = Player.new('Player 1', 'X')
     @player2 = Player.new('Player 2', 'O')
     @grid = GridBoard.new
+    @current_player = nil
   end
 
   def set_current_player
-    if @current_player == self.player1
-      @current_player = self.player2
+    if self.current_player == self.player1
+      self.current_player = self.player2
     else
-      @curent_player = self.player1
+      self.current_player = self.player1
     end
   end
 
@@ -126,6 +135,17 @@ class Game
     puts announce_players_msg(self.player1, self.player2)
     @current_player = self.player2
     run_round until self.win?(self.current_player, self.grid.grid) || self.draw?(self.grid.grid)
+    if self.win?(self.player1, self.grid.grid)
+      winner = self.player1
+      puts announce_winner(winner)
+    elsif self.win?(self.player2, self.grid.grid)
+      winner = self.player2
+      puts announce_winner(winner.name)
+    elsif self.draw?(self.grid.grid)
+      puts draw_msg
+    else
+      puts 'What happened?'
+    end
   end
 end
 
