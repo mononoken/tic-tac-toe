@@ -1,5 +1,5 @@
-require player.rb
-require board.rb
+require './lib/player'
+require './lib/board'
 
 module EndCondition
   def win?(player, grid)
@@ -81,6 +81,13 @@ class Game
                             self.player1
                           end
   end
+  
+  def intro
+    puts welcome_msg
+    puts instruction_msg
+    puts announce_players_msg(self.player1, self.player2)
+    @current_player = self.player2
+  end
 
   def run_round
     set_current_player
@@ -91,10 +98,7 @@ class Game
   end
 
   def run_game
-    puts welcome_msg
-    puts instruction_msg
-    puts announce_players_msg(self.player1, self.player2)
-    @current_player = self.player2
+    intro
     run_round until self.win?(self.current_player, self.grid.grid) || self.draw?(self.grid.grid)
     self.grid.display_board
     if self.win?(self.player1, self.grid.grid)
