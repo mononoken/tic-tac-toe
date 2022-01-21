@@ -39,8 +39,10 @@ module Messagable
   end
 
   def instruction_msg
-    'Each player will take turns choosing grid coordinates to place their marks.'
-    "Grid coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
+    [
+      'Each player will take turns choosing grid coordinates to place their marks.',
+      "Grid coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
+    ]
   end
 
   def prompt_choice_msg(player)
@@ -56,7 +58,7 @@ module Messagable
   end
 end
 
-class GridBoard
+class Board
   attr_accessor :grid
 
   def initialize
@@ -71,17 +73,22 @@ class GridBoard
     self.grid[choice.to_sym] = player.mark
   end
 
-  def display_grid
-    converted_grid = self.grid.transform_values do |tile|
+  def convert_grid
+    self.grid.transform_values do |tile|
       if tile.nil?
         '_'
       else
         tile
       end
     end
-    puts "|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
-    puts "|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"
-    puts "|#{converted_grid[:c1]}|#{converted_grid[:c2]}|#{converted_grid[:c3]}|"
+  end
+
+  def display_board
+    converted_grid = self.convert_grid
+    puts '  1 2 3 '
+    puts "a|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
+    puts "b|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"
+    puts "c|#{converted_grid[:c1]}|#{converted_grid[:c2]}|#{converted_grid[:c3]}|"
   end
 end
 
@@ -109,7 +116,7 @@ class Game
   def initialize
     @player1 = Player.new('Player 1', 'X')
     @player2 = Player.new('Player 2', 'O')
-    @grid = GridBoard.new
+    @grid = Board.new
     @current_player = nil
   end
 
@@ -123,7 +130,7 @@ class Game
 
   def run_round
     set_current_player
-    self.grid.display_grid
+    self.grid.display_board
     puts prompt_choice_msg(self.current_player)
     self.current_player.set_choice
     self.grid.mark_choice(self.current_player, self.current_player.choice)
@@ -135,6 +142,7 @@ class Game
     puts announce_players_msg(self.player1, self.player2)
     @current_player = self.player2
     run_round until self.win?(self.current_player, self.grid.grid) || self.draw?(self.grid.grid)
+    self.grid.display_board
     if self.win?(self.player1, self.grid.grid)
       winner = self.player1
       puts announce_winner(winner)
