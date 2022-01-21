@@ -9,6 +9,6 @@ class Player
   end
 
   def set_choice
-    self.choice = gets.chomp
+    self.choice = gets.chomp.downcase
   end
 end
