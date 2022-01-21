@@ -92,7 +92,7 @@ class Game
   def run_round
     set_current_player
     self.board.display_board
-    get_player_input
+    set_player_input
     self.board.mark_choice(self.current_player, self.current_player.choice)
   end
 
@@ -101,7 +101,7 @@ class Game
     valid_choices.include?(choice)
   end
 
-  def get_player_input
+  def set_player_input
     loop do
       puts prompt_choice_msg(self.current_player)
       player_choice = self.current_player.set_choice
