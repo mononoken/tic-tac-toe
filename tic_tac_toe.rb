@@ -68,8 +68,8 @@ class Game
   attr_accessor :board, :current_player
 
   def initialize
-    @player1 = Player.new('Player 1', 'X')
-    @player2 = Player.new('Player 2', 'O')
+    @player1 = Player.new('Player 1', 'x')
+    @player2 = Player.new('Player 2', 'o')
     @board = Board.new
     @current_player = nil
   end
@@ -81,7 +81,7 @@ class Game
                             self.player1
                           end
   end
-  
+
   def intro
     puts welcome_msg
     puts instruction_msg
@@ -92,9 +92,21 @@ class Game
   def run_round
     set_current_player
     self.board.display_board
-    puts prompt_choice_msg(self.current_player)
-    self.current_player.set_choice
+    get_player_input
     self.board.mark_choice(self.current_player, self.current_player.choice)
+  end
+
+  def valid_choice?(choice)
+    valid_choices = %w[a1 a2 a3 b1 b2 b3 c1 c2 c3]
+    valid_choices.include?(choice)
+  end
+
+  def get_player_input
+    loop do
+      puts prompt_choice_msg(self.current_player)
+      player_choice = self.current_player.set_choice
+      break if valid_choice?(player_choice)
+    end
   end
 
   def run_game
