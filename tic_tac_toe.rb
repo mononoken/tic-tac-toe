@@ -68,8 +68,8 @@ class Game
   attr_accessor :board, :current_player
 
   def initialize
-    @player1 = Player.new('Player 1', 'x')
-    @player2 = Player.new('Player 2', 'o')
+    @player1 = Player.new(self, 'Player 1', 'x')
+    @player2 = Player.new(self, 'Player 2', 'o')
     @board = Board.new
     @current_player = nil
   end
