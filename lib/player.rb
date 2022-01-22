@@ -2,8 +2,6 @@ class Player
   attr_reader :name, :mark, :game
   attr_accessor :choice
 
-  @@valid_choices = %w[a1 a2 a3 b1 b2 b3 c1 c2 c3]
-
   def initialize(game, name, mark)
     @game = game
     @name = name
@@ -12,7 +10,11 @@ class Player
   end
 
   def valid_choice?(choice)
-    self.game.board.grid.fetch(choice.to_sym).nil?
+    if choice.nil?
+      false
+    else
+      self.game.board.grid.fetch(choice.to_sym).nil?
+    end
   end
 
   def set_choice
