@@ -13,7 +13,7 @@ class Player
     if choice.nil?
       false
     else
-      self.game.board.grid.fetch(choice.to_sym).nil?
+      self.game.board.grid.fetch(choice.to_sym, 'invalid choice').nil?
     end
   end
 
