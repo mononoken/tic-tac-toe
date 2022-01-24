@@ -104,18 +104,39 @@ class Game
     end
   end
 
+  def prompt_replay
+    puts 'Play again? (y/n)'
+    replay_option = gets.chomp.downcase
+    case replay_option
+    when 'y'
+      reset_game
+    when 'n'
+      end_game
+    else
+      prompt_replay
+    end
+  end
+
+  def reset_game
+    new_game = Game.new
+    new_game.run_game
+  end
+
+  def end_game
+    puts 'Game over. Thanks for playing!'
+  end
+
   def run_game
     intro
     run_round until self.win?(self.current_player, self.board.grid) || self.draw?(self.board.grid)
     self.board.display_board
-    if self.win?(self.player1, self.board.grid)
-      winner = self.player1
+    if self.win?(self.current_player, self.board.grid)
+      winner = self.current_player.name
       puts announce_winner(winner)
-    elsif self.win?(self.player2, self.board.grid)
-      winner = self.player2
-      puts announce_winner(winner.name)
+      prompt_replay
     elsif self.draw?(self.board.grid)
       puts draw_msg
+      prompt_replay
     else
       puts 'What happened?'
     end
