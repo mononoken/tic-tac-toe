@@ -2,13 +2,13 @@ require './lib/player'
 require './lib/board'
 
 module EndCondition
-  def win?(player, board)
+  def win?(player)
     wins = [
       %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
       %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
       %i[a1 b2 c3], %i[a3 b2 c1]
     ]
-    wins.any? { |line| board.fetch_values(*line).all?(player.mark) }
+    wins.any? { |line| board.grid.fetch_values(*line).all?(player.mark) }
   end
 
   def draw?(grid)
@@ -78,7 +78,7 @@ class Game
 
   def run_round
     set_current_player
-    self.board.display_board
+    self.board.display
     set_player_input
     self.board.mark_choice(self.current_player, self.current_player.choice)
   end
@@ -115,11 +115,11 @@ class Game
 
   def run_game
     intro
-    run_round until self.win?(self.current_player, self.board.grid) || self.draw?(self.board.grid)
-    self.board.display_board
-    if self.win?(self.current_player, self.board.grid)
+    run_round until self.win?(self.current_player) || self.draw?(self.board.grid)
+    self.board.display
+    if self.win?(self.current_player)
       winner = self.current_player.name
-      puts announce_winner(winner)
+      puts announce_winner(self.current_player.name)
       prompt_replay
     elsif self.draw?(self.board.grid)
       puts draw_msg

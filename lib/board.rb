@@ -23,7 +23,7 @@ class Board
     end
   end
 
-  def display_board
+  def display
     converted_grid = self.convert_grid_nils
     puts '  1 2 3 '
     puts "a|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
