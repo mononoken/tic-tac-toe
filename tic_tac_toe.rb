@@ -3,25 +3,12 @@ require './lib/board'
 
 module EndCondition
   def win?(player, board)
-    if board[:a1] == player.mark && board[:a2] == player.mark && board[:a3] == player.mark
-      true
-    elsif board[:b1] == player.mark && board[:b2] == player.mark && board[:b3] == player.mark
-      true
-    elsif board[:c1] == player.mark && board[:c2] == player.mark && board[:c3] == player.mark
-      true
-    elsif board[:a1] == player.mark && board[:b1] == player.mark && board[:c1] == player.mark
-      true
-    elsif board[:a2] == player.mark && board[:b2] == player.mark && board[:c2] == player.mark
-      true
-    elsif board[:a3] == player.mark && board[:b3] == player.mark && board[:c3] == player.mark
-      true
-    elsif board[:a1] == player.mark && board[:b2] == player.mark && board[:c3] == player.mark
-      true
-    elsif board[:a3] == player.mark && board[:b2] == player.mark && board[:c1] == player.mark
-      true
-    else
-      false
-    end
+    wins = [
+      %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
+      %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
+      %i[a1 b2 c3], %i[a3 b2 c1]
+    ]
+    wins.any? { |line| board.fetch_values(*line).all?(player.mark) }
   end
 
   def draw?(grid)
@@ -137,11 +124,9 @@ class Game
     elsif self.draw?(self.board.grid)
       puts draw_msg
       prompt_replay
-    else
-      puts 'What happened?'
     end
   end
 end
 
-test_game = Game.new
-test_game.run_game
+new_game = Game.new
+new_game.run_game
