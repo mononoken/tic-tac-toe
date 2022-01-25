@@ -31,7 +31,7 @@ module Messagable
   def instruction_msg
     [
       'Each player will take turns choosing board coordinates to place their marks.',
-      "board coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
+      "Board coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
     ]
   end
 
@@ -104,6 +104,16 @@ class Game
     end
   end
 
+  def check_end_conditions
+    if self.win?(self.current_player)
+      puts announce_winner(self.current_player.name)
+      prompt_replay
+    elsif self.draw?(self.board.grid)
+      puts draw_msg
+      prompt_replay
+    end
+  end
+
   def reset_game
     new_game = Game.new
     new_game.run_game
@@ -117,14 +127,7 @@ class Game
     intro
     run_round until self.win?(self.current_player) || self.draw?(self.board.grid)
     self.board.display
-    if self.win?(self.current_player)
-      winner = self.current_player.name
-      puts announce_winner(self.current_player.name)
-      prompt_replay
-    elsif self.draw?(self.board.grid)
-      puts draw_msg
-      prompt_replay
-    end
+    check_end_conditions
   end
 end
 
