@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/player'
 require './lib/board'
 
@@ -123,9 +125,13 @@ class Game
     puts 'Game over. Thanks for playing!'
   end
 
+  def game_over?
+    win?(player1) || win?(player2) || draw?(board.grid)
+  end
+
   def run_game
     intro
-    run_round until self.win?(self.current_player) || self.draw?(self.board.grid)
+    run_round until game_over?
     self.board.display
     check_end_conditions
   end
