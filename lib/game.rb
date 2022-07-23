@@ -3,17 +3,6 @@
 require './lib/player'
 require './lib/board'
 
-module EndCondition
-  def win?(player)
-    wins = [
-      %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
-      %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
-      %i[a1 b2 c3], %i[a3 b2 c1]
-    ]
-    wins.any? { |line| board.grid.fetch_values(*line).all?(player.mark) }
-  end
-end
-
 module Messagable
   def welcome_msg
     'Welcome to a game of Tic-tac-toe!'
@@ -47,7 +36,6 @@ module Messagable
 end
 
 class Game
-  include EndCondition
   include Messagable
   attr_reader :player1, :player2
   attr_accessor :board, :current_player
@@ -101,7 +89,7 @@ class Game
       prompt_replay
     end
   end
-g
+
   def announce_results
     if winner?
       puts announce_winner(winner)
@@ -118,6 +106,15 @@ g
 
   def exit_game
     puts 'Game over. Thanks for playing!'
+  end
+
+  def win?(player)
+    wins = [
+      %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
+      %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
+      %i[a1 b2 c3], %i[a3 b2 c1]
+    ]
+    wins.any? { |line| board.grid.fetch_values(*line).all?(player.mark) }
   end
 
   def winner
