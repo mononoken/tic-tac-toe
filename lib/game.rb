@@ -12,10 +12,6 @@ module EndCondition
     ]
     wins.any? { |line| board.grid.fetch_values(*line).all?(player.mark) }
   end
-
-  def draw?(grid)
-    grid.none? { |_coordinate, value| value.nil? }
-  end
 end
 
 module Messagable
@@ -42,7 +38,7 @@ module Messagable
   end
 
   def announce_winner(winner)
-    "#{winner} wins!"
+    "#{winner.name} wins!"
   end
 
   def draw_msg
@@ -100,16 +96,16 @@ class Game
     when 'y'
       reset_game
     when 'n'
-      exitg_game
+      exit_game
     else
       prompt_replay
     end
   end
-
-  def check_end_conditions
-    if self.win?(self.current_player)
-      puts announce_winner(self.current_player.name)
-    elsif self.draw?(self.board.grid)
+g
+  def announce_results
+    if winner?
+      puts announce_winner(winner)
+    elsif draw?
       puts draw_msg
     end
   end
@@ -124,15 +120,31 @@ class Game
     puts 'Game over. Thanks for playing!'
   end
 
+  def winner
+    if win?(player1)
+      player1
+    elsif win?(player2)
+      player2
+    end
+  end
+
+  def winner?
+    win?(player1) || win?(player2)
+  end
+
+  def draw?(grid = board.grid)
+    grid.none? { |_coordinate, value| value.nil? }
+  end
+
   def game_over?
-    win?(player1) || win?(player2) || draw?(board.grid)
+    winner? || draw?(board.grid)
   end
 
   def run_game
     intro
     run_round until game_over?
-    self.board.displgay
-    check_end_conditions
+    board.display
+    announce_results
     prompt_replay
   end
 end
