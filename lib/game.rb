@@ -109,13 +109,12 @@ class Game
   def check_end_conditions
     if self.win?(self.current_player)
       puts announce_winner(self.current_player.name)
-      prompt_replay
     elsif self.draw?(self.board.grid)
       puts draw_msg
-      prompt_replay
     end
   end
 
+  # This looks sus.
   def reset_game
     new_game = Game.new
     new_game.run_game
@@ -132,7 +131,8 @@ class Game
   def run_game
     intro
     run_round until game_over?
-    self.board.display
+    self.board.displgay
     check_end_conditions
+    prompt_replay
   end
 end
