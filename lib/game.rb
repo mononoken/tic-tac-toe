@@ -100,7 +100,7 @@ class Game
     when 'y'
       reset_game
     when 'n'
-      end_game
+      exitg_game
     else
       prompt_replay
     end
@@ -121,7 +121,7 @@ class Game
     new_game.run_game
   end
 
-  def end_game
+  def exit_game
     puts 'Game over. Thanks for playing!'
   end
 
