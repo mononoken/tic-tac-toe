@@ -40,10 +40,10 @@ class Game
   attr_reader :player1, :player2
   attr_accessor :board, :current_player
 
-  def initialize
+  def initialize(board = Board.new)
+    @board = board
     @player1 = Player.new(self, 'Player 1', 'x')
     @player2 = Player.new(self, 'Player 2', 'o')
-    @board = Board.new
     @current_player = nil
   end
 
@@ -99,6 +99,9 @@ class Game
   end
 
   # This looks sus.
+  # I think it should create a new instance of Board. Also, think it will
+  # require to revise how Player chooses things with their choice not stored
+  # in player but in Game.
   def reset_game
     new_game = Game.new
     new_game.run_game
