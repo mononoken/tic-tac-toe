@@ -117,13 +117,9 @@ class Game
     end
   end
 
-  # This looks sus.
-  # I think it should create a new instance of Board. Also, think it will
-  # require to revise how Player chooses things with their choice not stored
-  # in player but in Game.
   def reset_game
-    new_game = Game.new
-    new_game.run_game
+    @board = Board.new
+    run_game
   end
 
   def exit_game
