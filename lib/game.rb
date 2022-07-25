@@ -47,6 +47,36 @@ class Game
     @current_player = nil
   end
 
+  def intro
+    puts welcome_msg
+    puts instruction_msg
+    puts announce_players_msg(player1, player2)
+    set_current_player
+  end
+
+  def run_game
+    intro
+    run_round until game_over?
+    board.display
+    announce_results
+    prompt_replay
+  end
+
+  def run_round
+    set_current_player
+    self.board.display
+    set_player_input
+    self.board.mark_choice(self.current_player, self.current_player.choice)
+  end
+
+  def set_player_input
+    loop do
+      puts prompt_choice_msg(self.current_player)
+      player_choice = self.current_player.set_choice
+      break if self.current_player.valid_choice?(player_choice)
+    end
+  end
+
   def set_current_player
     self.current_player = if current_player?(player1)
                             player2
@@ -63,28 +93,6 @@ class Game
 
   def current_player?(player)
     current_player == player
-  end
-
-  def intro
-    puts welcome_msg
-    puts instruction_msg
-    puts announce_players_msg(self.player1, self.player2)
-    set_current_player
-  end
-
-  def run_round
-    set_current_player
-    self.board.display
-    set_player_input
-    self.board.mark_choice(self.current_player, self.current_player.choice)
-  end
-
-  def set_player_input
-    loop do
-      puts prompt_choice_msg(self.current_player)
-      player_choice = self.current_player.set_choice
-      break if self.current_player.valid_choice?(player_choice)
-    end
   end
 
   def prompt_replay
@@ -148,13 +156,5 @@ class Game
 
   def game_over?
     winner? || draw?(board.grid)
-  end
-
-  def run_game
-    intro
-    run_round until game_over?
-    board.display
-    announce_results
-    prompt_replay
   end
 end
