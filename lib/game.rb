@@ -48,18 +48,28 @@ class Game
   end
 
   def set_current_player
-    self.current_player = if self.current_player == self.player1
-                            self.player2
+    self.current_player = if current_player?(player1)
+                            player2
+                          elsif current_player?(player2)
+                            player1
                           else
-                            self.player1
+                            random_player
                           end
+  end
+
+  def random_player
+    rand(1..2) == 1 ? player1 : player2
+  end
+
+  def current_player?(player)
+    current_player == player
   end
 
   def intro
     puts welcome_msg
     puts instruction_msg
     puts announce_players_msg(self.player1, self.player2)
-    @current_player = self.player2
+    set_current_player
   end
 
   def run_round
