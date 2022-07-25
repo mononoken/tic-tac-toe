@@ -64,16 +64,17 @@ class Game
 
   def run_round
     set_current_player
-    self.board.display
+    board.display
     set_player_input
-    self.board.mark_choice(self.current_player, self.current_player.choice)
+    board.mark_choice(current_player, current_player.choice)
   end
 
   def set_player_input
     loop do
-      puts prompt_choice_msg(self.current_player)
-      player_choice = self.current_player.set_choice
-      break if self.current_player.valid_choice?(player_choice)
+      puts prompt_choice_msg(current_player)
+      player_choice = current_player.set_choice
+
+      break if current_player.valid_choice?(player_choice)
     end
   end
 
