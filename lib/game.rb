@@ -4,21 +4,18 @@ require './lib/player'
 require './lib/board'
 
 module Messagable
-  def welcome_msg
-    'Welcome to a game of Tic-tac-toe!'
+  def intro_msg
+    [
+      'Welcome to a game of Tic-tac-toe!',
+      'Each player will take turns choosing board coordinates to place their marks.',
+      "Board coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
+    ]
   end
 
   def announce_players_msg(first_player, second_player)
     [
       "#{first_player.name} is assigned #{first_player.mark}.",
       "#{second_player.name} is assigned #{second_player.mark}."
-    ]
-  end
-
-  def instruction_msg
-    [
-      'Each player will take turns choosing board coordinates to place their marks.',
-      "Board coordinate inputs must be formatted similar to these examples: 'a1' 'b2'."
     ]
   end
 
@@ -37,6 +34,7 @@ end
 
 class Game
   include Messagable
+
   attr_reader :player1, :player2
   attr_accessor :board, :current_player
 
@@ -48,8 +46,7 @@ class Game
   end
 
   def intro
-    puts welcome_msg
-    puts instruction_msg
+    puts intro_msg
     puts announce_players_msg(player1, player2)
     set_current_player
   end
@@ -122,10 +119,6 @@ class Game
     run_game
   end
 
-  def exit_game
-    puts 'Game over. Thanks for playing!'
-  end
-
   def win?(player)
     wins = [
       %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
@@ -153,5 +146,11 @@ class Game
 
   def game_over?
     winner? || draw?(board.grid)
+  end
+
+  private
+
+  def exit_game
+    puts 'Game over. Thanks for playing!'
   end
 end
