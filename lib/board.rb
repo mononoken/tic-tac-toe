@@ -9,12 +9,13 @@ class Board
     }
   end
 
+  # This method belongs in Game.
   def mark_choice(player, choice)
-    self.grid[choice.to_sym] = player.mark
+    grid[choice.to_sym] = player.mark
   end
 
   def convert_grid_nils
-    self.grid.transform_values do |tile|
+    grid.transform_values do |tile|
       if tile.nil?
         '_'
       else
@@ -24,7 +25,7 @@ class Board
   end
 
   def display
-    converted_grid = self.convert_grid_nils
+    converted_grid = convert_grid_nils
     puts '  1 2 3 '
     puts "a|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
     puts "b|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"

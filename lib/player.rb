@@ -13,16 +13,12 @@ class Player
     if choice.nil?
       false
     else
-      self.game.board.grid.fetch(choice.to_sym, 'invalid choice').nil?
+      game.board.grid.fetch(choice.to_sym, 'invalid choice').nil?
     end
   end
 
   def set_choice
     choice = gets.chomp.downcase
-    self.choice = if valid_choice?(choice)
-                    choice
-                  else
-                    nil
-                  end
+    self.choice = choice if valid_choice?(choice)
   end
 end
