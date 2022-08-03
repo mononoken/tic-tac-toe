@@ -2,8 +2,7 @@
 
 # User for Tic-tac-toe game.
 class Player
-  attr_reader :name, :mark, :game
-  attr_accessor :choice
+  attr_reader :name, :mark
 
   def initialize(name, mark)
     @name = name
