@@ -40,8 +40,8 @@ class Game
 
   def initialize(board = Board.new)
     @board = board
-    @player1 = Player.new(self, 'Player 1', 'x')
-    @player2 = Player.new(self, 'Player 2', 'o')
+    @player1 = Player.new('Player 1', 'x')
+    @player2 = Player.new('Player 2', 'o')
     @current_player = nil
   end
 
@@ -62,18 +62,18 @@ class Game
   def run_round
     set_current_player
     board.display
-    set_player_input
-    # Fix this method
-    board.mark_choice(current_player, current_player.choice)
+    board.mark_choice(current_player, player_input)
   end
 
-  def set_player_input
+  # This method deserves a different name?
+  def player_input(player_choice = nil)
     loop do
       puts prompt_choice_msg(current_player)
       player_choice = gets.chomp.downcase
 
       break if board.valid_choice?(player_choice)
     end
+    player_choice
   end
 
   def set_current_player
