@@ -64,16 +64,15 @@ class Game
   def run_round
     set_current_player
     board.display
-    board.mark_choice(current_player, player_input)
+    board.mark_tile(current_player.mark, player_input)
   end
 
-  # This method deserves a different name?
   def player_input(player_choice = nil)
     loop do
       puts prompt_choice_msg(current_player)
       player_choice = gets.chomp.downcase
 
-      break if board.valid_choice?(player_choice)
+      break if board.valid_tile?(player_choice)
     end
     player_choice
   end

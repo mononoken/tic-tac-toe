@@ -2,7 +2,7 @@
 
 # Board to store choices and show visual to Player.
 class Board
-  attr_accessor :grid
+  attr_reader :grid
 
   def initialize
     @grid = {
@@ -12,34 +12,26 @@ class Board
     }
   end
 
-  # This method belongs in Game.
-  def mark_choice(player, choice)
-    grid[choice.to_sym] = player.mark
-  end
-
-  def convert_grid_nils
-    grid.transform_values do |tile|
-      if tile.nil?
-        '_'
-      else
-        tile
-      end
-    end
-  end
-
-  def display
-    converted_grid = convert_grid_nils
-    puts '  1 2 3 '
-    puts "a|#{converted_grid[:a1]}|#{converted_grid[:a2]}|#{converted_grid[:a3]}|"
-    puts "b|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"
-    puts "c|#{converted_grid[:c1]}|#{converted_grid[:c2]}|#{converted_grid[:c3]}|"
-  end
-
-  def valid_choice?(choice)
+  def valid_tile?(choice)
     if choice.nil?
       false
     else
       grid.fetch(choice.to_sym, 'invalid choice').nil?
     end
+  end
+
+  def mark_tile(mark, location)
+    grid[location.to_sym] = mark
+  end
+
+  def display(grid = convert_grid_nils(self.grid))
+    puts '  1 2 3 '
+    puts "a|#{grid[:a1]}|#{grid[:a2]}|#{grid[:a3]}|"
+    puts "b|#{grid[:b1]}|#{grid[:b2]}|#{grid[:b3]}|"
+    puts "c|#{grid[:c1]}|#{grid[:c2]}|#{grid[:c3]}|"
+  end
+
+  def convert_grid_nils(grid = self.grid)
+    grid.transform_values { |tile| tile.nil? ? '_' : tile }
   end
 end
