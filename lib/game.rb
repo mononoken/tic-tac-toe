@@ -63,15 +63,16 @@ class Game
     set_current_player
     board.display
     set_player_input
+    # Fix this method
     board.mark_choice(current_player, current_player.choice)
   end
 
   def set_player_input
     loop do
       puts prompt_choice_msg(current_player)
-      player_choice = current_player.set_choice
+      player_choice = gets.chomp.downcase
 
-      break if current_player.valid_choice?(player_choice)
+      break if board.valid_choice?(player_choice)
     end
   end
 

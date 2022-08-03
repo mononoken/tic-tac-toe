@@ -31,4 +31,12 @@ class Board
     puts "b|#{converted_grid[:b1]}|#{converted_grid[:b2]}|#{converted_grid[:b3]}|"
     puts "c|#{converted_grid[:c1]}|#{converted_grid[:c2]}|#{converted_grid[:c3]}|"
   end
+
+  def valid_choice?(choice)
+    if choice.nil?
+      false
+    else
+      grid.fetch(choice.to_sym, 'invalid choice').nil?
+    end
+  end
 end
