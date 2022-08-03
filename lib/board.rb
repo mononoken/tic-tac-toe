@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Board to store choices and show visual to Player.
 class Board
   attr_accessor :grid
 

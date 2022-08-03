@@ -3,6 +3,7 @@
 require './lib/player'
 require './lib/board'
 
+# Store string messages outside of game.
 module Messagable
   def intro_msg
     [
@@ -32,6 +33,7 @@ module Messagable
   end
 end
 
+# Game of Tic-tac-toe.
 class Game
   include Messagable
 
