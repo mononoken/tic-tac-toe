@@ -13,11 +13,7 @@ class Board
   end
 
   def valid_tile?(choice)
-    if choice.nil?
-      false
-    else
-      grid.fetch(choice.to_sym, 'invalid choice').nil?
-    end
+    grid.fetch(choice.to_sym, 'invalid choice').nil?
   end
 
   def mark_tile(mark, location)
