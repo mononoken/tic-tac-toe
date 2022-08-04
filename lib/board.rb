@@ -16,18 +16,20 @@ class Board
     grid.fetch(choice.to_sym, 'invalid choice').nil?
   end
 
-  def mark_tile(mark, location)
-    grid[location.to_sym] = mark
+  def mark_tile(mark, tile)
+    grid[tile.to_sym] = mark
   end
+
+  def convert_grid_nils(grid = self.grid)
+    grid.transform_values { |tile| tile.nil? ? '_' : tile }
+  end
+
+  private
 
   def display(grid = convert_grid_nils(self.grid))
     puts '  1 2 3 '
     puts "a|#{grid[:a1]}|#{grid[:a2]}|#{grid[:a3]}|"
     puts "b|#{grid[:b1]}|#{grid[:b2]}|#{grid[:b3]}|"
     puts "c|#{grid[:c1]}|#{grid[:c2]}|#{grid[:c3]}|"
-  end
-
-  def convert_grid_nils(grid = self.grid)
-    grid.transform_values { |tile| tile.nil? ? '_' : tile }
   end
 end
