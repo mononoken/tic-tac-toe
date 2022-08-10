@@ -25,8 +25,7 @@ class Board
   def winner?
     WINS.any? do |line|
       line_values = grid.fetch_values(*line)
-      line_values.uniq.length == 1 &&
-        line_values.none?(nil)
+      line_values.uniq.length == 1 && line_values.none?(nil)
     end
   end
 

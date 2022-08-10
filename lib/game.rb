@@ -53,9 +53,17 @@ class Game
     set_current_player
   end
 
-  def run_game
+  def start_game
     intro
+    run_game
+  end
+
+  def run_game
     run_round until board.game_over?
+    end_game
+  end
+
+  def end_game
     board.display
     announce_results
     prompt_replay
@@ -128,18 +136,6 @@ class Game
       player2
     end
   end
-
-  # def winner?
-  #   board.win?(player1.mark) || board.win?(player2.mark)
-  # end
-
-  # def draw?(grid = board.grid)
-  #   grid.none? { |_coordinate, value| value.nil? }
-  # end
-
-  # def game_over?
-  #   winner? || draw?(board.grid)
-  # end
 
   private
 
