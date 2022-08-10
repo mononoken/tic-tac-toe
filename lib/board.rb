@@ -4,12 +4,38 @@
 class Board
   attr_reader :grid
 
+  WINS = [
+    %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
+    %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
+    %i[a1 b2 c3], %i[a3 b2 c1]
+  ].freeze
+
   def initialize(grid_values = Array.new(9))
     @grid = {
       a1: grid_values[0], a2: grid_values[1], a3: grid_values[2],
       b1: grid_values[3], b2: grid_values[4], b3: grid_values[5],
       c1: grid_values[6], c2: grid_values[7], c3: grid_values[8]
     }
+  end
+
+  def win?(player_mark)
+    WINS.any? { |line| grid.fetch_values(*line).all?(player_mark) }
+  end
+
+  def winner?
+    WINS.any? do |line|
+      line_values = grid.fetch_values(*line)
+      line_values.uniq.length == 1 &&
+        line_values.none?(nil)
+    end
+  end
+
+  def draw?
+    grid.none? { |_coordinate, value| value.nil? }
+  end
+
+  def game_over?
+    winner? || draw?
   end
 
   def valid_tile?(choice)

@@ -55,7 +55,7 @@ class Game
 
   def run_game
     intro
-    run_round until game_over?
+    run_round until board.game_over?
     board.display
     announce_results
     prompt_replay
@@ -109,9 +109,9 @@ class Game
   end
 
   def announce_results
-    if winner?
+    if board.winner?
       puts announce_winner(winner)
-    elsif draw?
+    elsif board.draw?
       puts draw_msg
     end
   end
@@ -121,34 +121,25 @@ class Game
     run_game
   end
 
-  def win?(player)
-    wins = [
-      %i[a1 a2 a3], %i[b1 b2 b3], %i[c1 c2 c3],
-      %i[a1 b1 c1], %i[a2 b2 c2], %i[a3 b3 c3],
-      %i[a1 b2 c3], %i[a3 b2 c1]
-    ]
-    wins.any? { |line| board.grid.fetch_values(*line).all?(player.mark) }
-  end
-
   def winner
-    if win?(player1)
+    if board.win?(player1.mark)
       player1
-    elsif win?(player2)
+    elsif board.win?(player2.mark)
       player2
     end
   end
 
-  def winner?
-    win?(player1) || win?(player2)
-  end
+  # def winner?
+  #   board.win?(player1.mark) || board.win?(player2.mark)
+  # end
 
-  def draw?(grid = board.grid)
-    grid.none? { |_coordinate, value| value.nil? }
-  end
+  # def draw?(grid = board.grid)
+  #   grid.none? { |_coordinate, value| value.nil? }
+  # end
 
-  def game_over?
-    winner? || draw?(board.grid)
-  end
+  # def game_over?
+  #   winner? || draw?(board.grid)
+  # end
 
   private
 
