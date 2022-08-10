@@ -4,11 +4,11 @@
 class Board
   attr_reader :grid
 
-  def initialize
+  def initialize(grid_values = Array.new(9))
     @grid = {
-      a1: nil, a2: nil, a3: nil,
-      b1: nil, b2: nil, b3: nil,
-      c1: nil, c2: nil, c3: nil
+      a1: grid_values[0], a2: grid_values[1], a3: grid_values[2],
+      b1: grid_values[3], b2: grid_values[4], b3: grid_values[5],
+      c1: grid_values[6], c2: grid_values[7], c3: grid_values[8]
     }
   end
 
@@ -23,8 +23,6 @@ class Board
   def convert_grid_nils(grid = self.grid)
     grid.transform_values { |tile| tile.nil? ? '_' : tile }
   end
-
-  private
 
   def display(grid = convert_grid_nils(self.grid))
     puts '  1 2 3 '
