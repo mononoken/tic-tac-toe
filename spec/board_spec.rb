@@ -120,6 +120,32 @@ describe Board do
       end
     end
   end
+
+  describe '#draw?' do
+    context 'when board is empty' do
+      it 'returns false' do
+        expect(empty_board.draw?).to be(false)
+      end
+    end
+
+    context "when board has 'x' across the top" do
+      subject(:top_row_board) do
+        described_class.new(['x', 'x', 'x', 'o', 'o', 'x', 'o', 'x', 'o'])
+      end
+      it 'returns false' do
+        expect(top_row_board.draw?).to be(false)
+      end
+    end
+
+    context 'when board is full without winner' do
+      subject(:draw_board) do
+        described_class.new(['x','o','o','o','x','x','o','x','o'])
+      end
+      it 'returns true' do
+        expect(draw_board.draw?).to be(true)
+      end
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength
