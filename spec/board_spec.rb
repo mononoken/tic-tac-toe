@@ -76,6 +76,50 @@ describe Board do
       end
     end
   end
+
+  describe '#winner?' do
+    context 'when grid is empty' do
+      it 'returns false' do
+        expect(empty_board.winner?).to be(false)
+      end
+    end
+
+    context 'when grid has some non-winning marks' do
+      subject(:incomplete_board) do
+        described_class.new(['x', 'o', nil, nil, 'o', nil, nil, nil, nil])
+      end
+      it 'returns false' do
+        expect(incomplete_board.winner?).to be(false)
+      end
+    end
+
+    context "when grid has 'x's across the top" do
+      subject(:top_row_board) do
+        described_class.new(['x', 'x', 'x', nil, 'o', 'o', 'o', nil, nil])
+      end
+      it 'returns true' do
+        expect(top_row_board.winner?).to be(true)
+      end
+    end
+
+    context "when grid has 'o's along the left" do
+      subject(:left_col_board) do
+        described_class.new(['o', 'x', 'x', 'o', 'x', nil, 'o', nil, nil])
+      end
+      it 'returns true' do
+        expect(left_col_board.winner?).to be(true)
+      end
+    end
+
+    context "when grid has 'o's along a diagonal" do
+      subject(:diagonal_board) do
+        described_class.new(['o', 'x', 'x', 'x', 'o', nil, nil, nil, 'o'])
+      end
+      it 'returns true' do
+        expect(diagonal_board.winner?).to be(true)
+      end
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength
