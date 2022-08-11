@@ -18,10 +18,6 @@ class Board
     }
   end
 
-  def win?(player_mark)
-    WINS.any? { |line| grid.fetch_values(*line).all?(player_mark) }
-  end
-
   def winner?
     WINS.any? do |line|
       line_values = grid.fetch_values(*line)
@@ -30,11 +26,17 @@ class Board
   end
 
   def draw?
+    return false if winner?
+
     grid.none? { |_coordinate, value| value.nil? }
   end
 
   def game_over?
     winner? || draw?
+  end
+
+  def win?(player_mark)
+    WINS.any? { |line| grid.fetch_values(*line).all?(player_mark) }
   end
 
   def valid_tile?(choice)
