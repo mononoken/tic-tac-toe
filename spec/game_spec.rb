@@ -45,18 +45,40 @@ describe Game do
     end
   end
 
-  # describe '#win?' do
-  #   context "when board is marked 'x' in a1 a2 a3" do
-  #     subject(:finished_game) { described_class.new(finished_board) }
-  #     let(:finished_board) { instance_double(Board) }
+  # DON'T PANIC
+  describe '#run_game' do
+    context 'when game_over? is false 5 times' do
+      subject(:five_round_game) { described_class.new(board) }
+      let(:board) { instance_double(Board) }
+      before do
+        allow(five_round_game).to receive(:end_game)
+        allow(five_round_game).to receive(:run_round)
+        allow(board).to receive(:game_over?)
+          .and_return(false, false, false, false, false, true)
+      end
 
-  #     before do
-  #     end
+      it 'loops run_round 5 times' do
+        expect(five_round_game).to receive(:run_round).exactly(5).times
+        five_round_game.run_game
+      end
+    end
 
-  #     it 'blanks' do
-  #     end
-  #   end
-  # end
+    context 'when game_over? is false 8 times' do
+      subject(:eight_round_game) { described_class.new(board) }
+      let(:board) { instance_double(Board) }
+      before do
+        allow(eight_round_game).to receive(:end_game)
+        allow(eight_round_game).to receive(:run_round)
+        allow(board).to receive(:game_over?)
+          .and_return(false, false, false, false, false, false, false, false, true)
+      end
+
+      it 'loops run_round 8 times' do
+        expect(eight_round_game).to receive(:run_round).exactly(8).times
+        eight_round_game.run_game
+      end
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength
