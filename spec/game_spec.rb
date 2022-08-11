@@ -45,7 +45,6 @@ describe Game do
     end
   end
 
-  # DON'T PANIC
   describe '#run_game' do
     context 'when game_over? is false 5 times' do
       subject(:five_round_game) { described_class.new(board) }

@@ -116,14 +116,6 @@ class Game
     end
   end
 
-  def announce_results
-    if board.winner?
-      puts announce_winner(winner)
-    elsif board.draw?
-      puts draw_msg
-    end
-  end
-
   def reset_game
     @board = Board.new
     run_game
@@ -141,5 +133,13 @@ class Game
 
   def exit_game
     puts 'Game over. Thanks for playing!'
+  end
+
+  def announce_results
+    if board.winner?
+      puts announce_winner(winner)
+    elsif board.draw?
+      puts draw_msg
+    end
   end
 end
