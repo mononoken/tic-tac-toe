@@ -146,6 +146,45 @@ describe Board do
       end
     end
   end
+
+  describe '#win?' do
+    context 'when board is empty' do
+      it 'returns false' do
+        player_mark = 'x'
+        expect(empty_board.win?(player_mark)).to be(false)
+      end
+    end
+
+    context 'when board has no winner' do
+      subject(:draw_board) do
+        described_class.new(['x','o','o','o','x','x','o','x','o'])
+      end
+      it 'returns false' do
+        player_mark = 'x'
+        expect(draw_board.win?(player_mark)).to be(false)
+      end
+    end
+
+    context "when 'x' is checked and wins with the top row" do
+      subject(:top_row_board) do
+        described_class.new(['x', 'x', 'x', 'o', 'o', 'x', 'o', 'x', 'o'])
+      end
+      it 'returns true' do
+        player_mark = 'x'
+        expect(top_row_board.win?(player_mark)).to be(true)
+      end
+    end
+
+    context "when 'x' is checked but 'o' wins on a diagonal" do
+      subject(:diagonal_board) do
+        described_class.new(['o', 'x', 'x', 'x', 'o', nil, nil, nil, 'o'])
+      end
+      it 'returns false' do
+        player_mark = 'x'
+        expect(diagonal_board.win?(player_mark)).to be(false)
+      end
+    end
+  end
 end
 
 # rubocop:enable Metrics/BlockLength
