@@ -19,16 +19,16 @@ describe Game do
       end
     end
 
-    # This is not actually a new game so should I make a new variable for it?
     context 'when current_player is player1' do
+      subject(:started_game) { described_class.new }
       before do
-        new_game.current_player = new_game.player1
+        started_game.current_player = started_game.player1
       end
 
       it 'sets current_player to player2' do
-        expect { new_game.set_current_player }.to \
-          change { new_game.current_player }
-          .from(new_game.player1).to(new_game.player2)
+        expect { started_game.set_current_player }.to \
+          change { started_game.current_player }
+          .from(started_game.player1).to(started_game.player2)
       end
     end
 
